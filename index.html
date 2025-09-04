@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Otter AR Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Leaflet 样式 -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    }
+
+    #map {
+      width: 100%;
+      height: 100vh;
+    }
+
+    .leaflet-popup-content {
+      font-size: 14px;
+    }
+
+    .leaflet-marker-icon {
+      transition: transform 0.2s;
+    }
+
+    .leaflet-marker-icon:hover {
+      transform: scale(1.2);
+    }
+
+    /* ✅ 高亮河流的 CSS 效果 */
+    .leaflet-interactive.river-path {
+      stroke: #3399ff;
+      filter: drop-shadow(0 0 5px rgba(0, 102, 204, 0.8));
+      transition: filter 0.3s ease-in-out;
+    }
+
+    .leaflet-interactive.river-path:hover {
+      filter: drop-shadow(0 0 8px rgba(0, 102, 255, 1));
+    }
+
+    /* ✅ 底部装饰容器 */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 16px;
+      right: 16px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .bottom-bar img {
+      max-height: 100px;
+      width: 100px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+    }
+
+    .bottom-bar p {
+      margin: 0;
+      font-size: 16px;
+      color: #333;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 480px) {
+      .bottom-bar {
+        padding: 10px;
+      }
+
+      .bottom-bar img {
+        max-height: 60px;
+      }
+
+      .bottom-bar p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 地图容器 -->
+  <div id="map"></div>
+
+  <!-- ✅ 底部装饰区域 -->
+  <div class="bottom-bar">
+    <img src="/assets/images/otter-banner.png" alt="Otter Banner" />
+    <p>Explore the hidden journeys of Cork’s otters along the Lee River</p>
+  </div>
+
+  <!-- Leaflet 脚本 -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin></script>
+
+  <!-- 地图逻辑 -->
+  <script type="module" src="/src/map.js"></script>
+</body>
+</html>
