@@ -191,7 +191,7 @@ function playNarration() {
     if (index >= chars.length) {
       audioEl.onended = () => {
         const btn = document.createElement('button');
-        btn.textContent = 'Fact';
+        btn.textContent = 'Why is memory important?';
         btn.onclick = () => {
           showPopup(
             "Puzzle & Habitat",
@@ -385,8 +385,6 @@ function showPuzzlePrompt() {
   });
   prompt.innerText = 'Drag puzzle blocks to help the otter rebuild.';
   document.body.appendChild(prompt);
-
-  setTimeout(() => prompt.remove(), 5000);
 }
 
 // ✅ Popup

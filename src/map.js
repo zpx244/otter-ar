@@ -11,10 +11,42 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // 自定义图标
 const otterIcon = L.icon({
-  iconUrl: '/assets/images/icon.png', // 确保路径正确，文件名为 icon.png
-  iconSize: [40, 40], // 图标尺寸（可根据实际图片微调）
-  iconAnchor: [20, 40], // 图标锚点（底部中心）
-  popupAnchor: [0, -35] // 弹窗相对于图标的偏移
+  iconUrl: '/assets/images/icon.png',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -35]
+});
+
+// 节点信息数组
+const nodes = [
+  { lat: 51.89830, lng: -8.49079, title: "Node 1 – Blackpool Headwaters", url: "/node1.html" },
+  { lat: 51.898920, lng: -8.483751, title: "Node 2 – Path Choose", url: "/node2.html" },
+  { lat: 51.901414, lng: -8.477903, title: "Node 3 – Feeding Scene", url: "/node3.html" },
+  { lat: 51.900676, lng: -8.470667, title: "Node 4 – Trust Encounter", url: "/node4.html" },
+  { lat: 51.900199, lng: -8.465996, title: "Node 5 – Obstacle Removal", url: "/node5.html" },
+  { lat: 51.899299, lng: -8.459837, title: "Node 6 – Trash Avoidance", url: "/node6.html" },
+  { lat: 51.898432, lng: -8.463226, title: "Node 7 – Noise Escape", url: "/node7.html" },
+  { lat: 51.896565, lng: -8.468473, title: "Node 8 – Puzzle Rebuild", url: "/node8.html" },
+  { lat: 51.895732, lng: -8.472196, title: "Node 9 – Eco Balance", url: "/node9.html" },
+  { lat: 51.895329, lng: -8.477268, title: "Node 10 – Final Reflection", url: "/node10.html" }
+];
+
+// 添加图钉和 tooltip
+nodes.forEach(({ lat, lng, title, url }) => {
+  const marker = L.marker([lat, lng], { icon: otterIcon }).addTo(map);
+
+  // 添加永久文字提示
+  marker.bindTooltip(title, {
+    permanent: true,
+    direction: 'top',
+    offset: [0, -40],
+    className: 'node-tooltip'
+  });
+
+  // 点击跳转页面
+  marker.on('click', () => {
+    window.location.href = url;
+  });
 });
 
 // 加载 Lee River 的 GeoJSON 数据并显示高亮样式
@@ -33,54 +65,3 @@ fetch('/assets/geo/lee-river.geojson')
   .catch(err => {
     console.error('Failed to load river GeoJSON:', err);
   });
-
-// 添加图钉（使用自定义图标）：
-L.marker([51.89830, -8.49079], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 1:</b> Blackpool Headwaters')
-  .on('click', () => window.location.href = '/node1.html');
-
-L.marker([51.898920, -8.483751], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 2:</b> Path Choose')
-  .on('click', () => window.location.href = '/node2.html');
-
-L.marker([51.901414, -8.477903], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 3:</b> Feeding Scene')
-  .on('click', () => window.location.href = '/node3.html');
-
-L.marker([51.900676, -8.470667], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 4:</b> Path Choose')
-  .on('click', () => window.location.href = '/node4.html');
-
-L.marker([51.900199, -8.465996], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 5:</b> Path Choose')
-  .on('click', () => window.location.href = '/node5.html');
-
-L.marker([51.899299, -8.459837], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 6:</b> Path Choose')
-  .on('click', () => window.location.href = '/node6.html');
-
-L.marker([51.898432, -8.463226], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 7:</b> Blackpool Headwaters')
-  .on('click', () => window.location.href = '/node7.html');
-
-L.marker([51.896565, -8.468473], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 8:</b> Path Choose')
-  .on('click', () => window.location.href = '/node8.html');
-
-L.marker([51.895732, -8.472196], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 9:</b> Feeding Scene')
-  .on('click', () => window.location.href = '/node9.html');
-
-L.marker([51.895329, -8.477268], { icon: otterIcon })
-  .addTo(map)
-  .bindPopup('<b>Node 10:</b> Path Choose')
-  .on('click', () => window.location.href = '/node10.html');

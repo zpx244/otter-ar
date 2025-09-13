@@ -395,8 +395,8 @@ window.showPopup = function (type) {
       <strong>What Did You Learn?</strong>
       <p>Otters live where we live..</p>
       <p>Every action leaves a mark on rivers.</p>
-      p>Balance between building and protecting is fragile</p>
-      p>The river is alive — and it remembers.</p>
+      <p>Balance between building and protecting is fragile</p>
+      <p>The river is alive — and it remembers.</p>
     `;
   } else if (type === 'fact') {
     content.innerHTML = `
