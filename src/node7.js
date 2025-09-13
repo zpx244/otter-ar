@@ -126,7 +126,7 @@ function addNoiseAndExit(center) {
 
     valid = true;
     for (let n of noiseSources) {
-      if (new THREE.Vector3(exitX, center.y, exitZ).distanceTo(n.position) < 1.2) {
+      if (new THREE.Vector3(exitX, center.y, exitZ).distanceTo(n.position) < 3) {
         valid = false; // 太近了，重新生成
         break;
       }
