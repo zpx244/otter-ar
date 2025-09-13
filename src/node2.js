@@ -362,6 +362,28 @@ renderer.domElement.addEventListener('click', (event) => {
       showTryAgainButton();
       narrationEl.innerHTML = `<span class="char">You chose the natural path. It’s slower, but smells fresh and feels right.</span>`;
       naturalAudio.play();
+
+      // 显示“→ Enter Node 3”按钮
+const nextBtn = document.createElement('button');
+nextBtn.textContent = '→ Enter Node 3';
+Object.assign(nextBtn.style, {
+  position: 'absolute',
+  bottom: '80px',
+  right: '20px',
+  padding: '10px 16px',
+  fontSize: '14px',
+  background: '#28a745',
+  color: '#fff',
+  border: 'none',
+  borderRadius: '6px',
+  boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+  cursor: 'pointer',
+  zIndex: 1000,
+});
+nextBtn.onclick = () => {
+  window.location.href = 'node3.html';
+};
+document.body.appendChild(nextBtn);
     } else if (name === 'polluted') {
       pollutedPathSelected = true;
       scene.remove(treeModel, treeClickBox, pollutedBottle, pollutedClickBox);

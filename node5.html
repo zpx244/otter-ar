@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Otter AR – Node 5</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+   body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background-image: url('/assets/images/node1_bg.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    canvas { display: block; }
+
+    #infoBox {
+      position: absolute;
+      top: env(safe-area-inset-top, 20px);
+      left: 20px;
+      right: 20px;
+      width: auto;
+      max-width: 640px;
+      max-height: 48vh;
+      overflow: auto;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 20px;
+      border-radius: 16px;
+      color: #333;
+      font-size: clamp(14px, 1.8vw, 16px);
+      line-height: 1.6;
+      z-index: 10;
+      display: none;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+      animation: fadeInBox 0.5s ease-out forwards;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.6);
+    }
+
+    @keyframes fadeInBox {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #narrationText {
+      margin-top: 8px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .char {
+      opacity: 0;
+      display: inline;
+      animation: fadeInChar 0.25s forwards;
+    }
+
+    @keyframes fadeInChar {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    #closeBtn {
+      float: right;
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    #popupOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      z-index: 20;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #popupContent {
+      background: rgba(255,255,255,0.95);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 300px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      color: #222;
+    }
+
+    #popupClose {
+      float: right;
+      cursor: pointer;
+      font-size: 18px;
+      color: #333;
+    }
+
+    button {
+      background: #0077aa;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin-top: 8px;
+      margin-right: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- 信息框 -->
+  <div id="infoBox">
+    <button id="closeBtn" onclick="document.getElementById('infoBox').style.display='none'">×</button>
+    <strong>Node 5 – Blocked Path</strong>
+    <div id="narrationText"></div>
+    <div id="extraButtons" style="display:none; margin-top:12px;"></div>
+  </div>
+
+  <!-- 弹窗 -->
+  <div id="popupOverlay">
+    <div id="popupContent">
+      <span id="popupClose" onclick="document.getElementById('popupOverlay').style.display='none'">×</span>
+      <div id="popupText"></div>
+    </div>
+  </div>
+
+  <!-- 音频 -->
+  <audio id="narrationAudio" src="/assets/audio/node5.mp3"></audio>
+
+  <!-- JS 入口 -->
+  <script type="module" src="/src/node5.js"></script>
+</body>
+</html>

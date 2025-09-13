@@ -4,56 +4,57 @@
   <meta charset="UTF-8" />
   <title>Otter AR – Node 1</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Core style for all UI elements, backgrounds, prompts, popups, buttons -->
   <style>
+    /* Basic body setup: no scroll, custom font, background image */
     body {
       margin: 0;
       overflow: hidden;
       font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+      background-image: url('/assets/images/node1_bg.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
+    /* Canvas (three.js render surface) takes full screen */
     canvas {
       display: block;
     }
 
-    /* 信息框样式（更柔和字体 + 美化） */
+    /* Floating info box that shows narration and buttons */
     #infoBox {
       position: absolute;
       top: env(safe-area-inset-top, 20px);
       left: 20px;
       right: 20px;
-      width: auto;
       max-width: 640px;
       max-height: 48vh;
       overflow: auto;
-      box-sizing: border-box;
       background: rgba(255, 255, 255, 0.15);
       border: 1px solid rgba(255, 255, 255, 0.25);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       padding: 20px;
       border-radius: 16px;
-      color: #333; /* ✅ 更柔和字体颜色 */
+      color: #333;
       font-size: clamp(14px, 1.8vw, 16px);
       line-height: 1.6;
       z-index: 10;
       display: none;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-      transition: opacity 0.4s ease, transform 0.4s ease;
       animation: fadeInBox 0.5s ease-out forwards;
-      text-shadow: 0 1px 1px rgba(255,255,255,0.6); /* ✅ 柔和文字阴影 */
+      text-shadow: 0 1px 1px rgba(255,255,255,0.6);
     }
 
+    /* Fade-in animation for infoBox */
     @keyframes fadeInBox {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Container for typewriter-style narration */
     #narrationText {
       margin-top: 8px;
       white-space: pre-wrap;
@@ -61,6 +62,7 @@
       overflow-wrap: anywhere;
     }
 
+    /* Each character fades in individually */
     .char {
       opacity: 0;
       display: inline;
@@ -72,10 +74,12 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Responsive tweak for small screens */
     @media (max-width: 420px) {
       #infoBox { left: 12px; right: 12px; }
     }
 
+    /* Close button for infoBox */
     #closeBtn {
       float: right;
       background: none;
@@ -85,6 +89,7 @@
       color: #333;
     }
 
+    /* Popup overlay: dark blurred background */
     #popupOverlay {
       display: none;
       position: fixed;
@@ -98,6 +103,7 @@
       justify-content: center;
     }
 
+    /* Popup box content */
     #popupContent {
       background: rgba(255,255,255,0.95);
       padding: 20px;
@@ -107,6 +113,7 @@
       color: #222;
     }
 
+    /* Close (X) icon for popup */
     #popupClose {
       float: right;
       cursor: pointer;
@@ -114,6 +121,7 @@
       color: #333;
     }
 
+    /* Generic button style */
     button {
       background: #0077aa;
       color: white;
@@ -125,29 +133,98 @@
       font-size: 14px;
       cursor: pointer;
     }
+
+    /* ARButton custom style (circular, semi-transparent) */
+    .webxr-button {
+      width: 200px;
+      height: 120px;
+      font-size: 26px;
+      font-weight: bold;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    /* Hover effect for AR button */
+    .webxr-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Common UI buttons (map, next) positioning */
+    .ar-ui-button {
+      position: absolute;
+      z-index: 1000;
+      font-size: 14px;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .enter-next-button {
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0,128,0,0.7);
+      color: white;
+    }
+
+    .back-to-map-button {
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+    }
+
+    /* Prompt box: bottom floating instruction */
+    #tapPrompt {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      z-index: 1000;
+      max-width: 80%;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <!-- 📦 信息框：标题 + 逐字旁白 + 交互按钮 -->
+
+  <!--  Narration + Buttons Panel -->
   <div id="infoBox">
-    <button id="closeBtn" onclick="document.getElementById('infoBox').style.display='none'">×</button>
-    <strong>Blackpool Headwaters – Morning Departure</strong>
+    <button id="closeBtn" onclick="document.getElementById('infoBox').style.display='none'">&times;</button>
+    <strong>Morning Departure</strong>
     <div id="narrationText"></div>
     <div id="extraButtons" style="display:none; margin-top:12px;"></div>
   </div>
 
-  <!-- 📦 弹出介绍框（Holt / Fact） -->
+  <!--  Popup Info Panel (Did You Know / Holt) -->
   <div id="popupOverlay">
     <div id="popupContent">
-      <span id="popupClose" onclick="document.getElementById('popupOverlay').style.display='none'">×</span>
+      <span id="popupClose" onclick="document.getElementById('popupOverlay').style.display='none'">&times;</span>
       <div id="popupText"></div>
     </div>
   </div>
 
-  <!-- 🎧 旁白音频 -->
+  <!--  Audio for narration and background music -->
   <audio id="narrationAudio" src="/assets/audio/node1.mp3"></audio>
+  <audio id="bgm" src="/assets/audio/background-music.mp3" loop></audio>
 
-  <!-- 🚀 JS 入口 -->
+  <!--  JavaScript main logic script -->
   <script type="module" src="/src/node1.js"></script>
 </body>
 </html>

@@ -64,3 +64,23 @@ L.marker([51.899299, -8.459837], { icon: otterIcon })
   .addTo(map)
   .bindPopup('<b>Node 6:</b> Path Choose')
   .on('click', () => window.location.href = '/node6.html');
+
+L.marker([51.898432, -8.463226], { icon: otterIcon })
+  .addTo(map)
+  .bindPopup('<b>Node 7:</b> Blackpool Headwaters')
+  .on('click', () => window.location.href = '/node7.html');
+
+L.marker([51.896565, -8.468473], { icon: otterIcon })
+  .addTo(map)
+  .bindPopup('<b>Node 8:</b> Path Choose')
+  .on('click', () => window.location.href = '/node8.html');
+
+L.marker([51.895732, -8.472196], { icon: otterIcon })
+  .addTo(map)
+  .bindPopup('<b>Node 9:</b> Feeding Scene')
+  .on('click', () => window.location.href = '/node9.html');
+
+L.marker([51.895329, -8.477268], { icon: otterIcon })
+  .addTo(map)
+  .bindPopup('<b>Node 10:</b> Path Choose')
+  .on('click', () => window.location.href = '/node10.html');

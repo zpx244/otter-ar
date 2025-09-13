@@ -12,7 +12,22 @@
     "vite": "^7.1.2"
   },
   "dependencies": {
+    "cesium": "^1.133.0",
+    "express": "^5.1.0",
     "leaflet": "^1.9.4",
     "three": "^0.179.1"
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zpx244/otter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zpx244/otter/issues"
+  },
+  "homepage": "https://github.com/zpx244/otter#readme"
 }
