@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "vite": "^7.1.2"
   },
   "dependencies": {
@@ -30,4 +31,5 @@
     "url": "https://github.com/zpx244/otter/issues"
   },
   "homepage": "https://github.com/zpx244/otter#readme"
+  
 }
