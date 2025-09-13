@@ -367,7 +367,7 @@ function showRecapButtonBottomRight() {
     cursor: 'pointer',
     boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
   });
-  btn.onclick = () => window.location.href = '/recap.html';
+  btn.onclick = () => window.location.href = '/index.html';
   document.body.appendChild(btn);
 }
 
